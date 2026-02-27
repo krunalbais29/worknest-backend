@@ -16,7 +16,11 @@ public class SecurityCorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         // ✅ frontend origin
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedOrigins(List.of(
+        	    "http://localhost:5173",
+        	    "http://localhost:3000",
+        	    "https://your-frontend.vercel.app"
+        	));
 
         // ✅ allow all HTTP methods
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

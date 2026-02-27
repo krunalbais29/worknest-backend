@@ -25,27 +25,27 @@ public class SecurityConfig {
             .cors(cors -> {})
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // ✅ allow CORS preflight
+
+                // Preflight
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                // public
+                // Public
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/test/**").permitAll()
 
-                // role-based
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
-                
-                
-
-                // authenticated
+                // Employee
                 .requestMatchers("/api/tasks/my").hasRole("EMPLOYEE")
-                .requestMatchers("/api/tasks/**").authenticated()
+                .requestMatchers("/api/employee/**").hasRole("EMPLOYEE")
+
+                // Admin
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                // Any other API
+                .requestMatchers("/api/**").authenticated()
 
                 .anyRequest().authenticated()
             )
-            .addFilterBefore(jwtAuthFilter,
-                    UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
