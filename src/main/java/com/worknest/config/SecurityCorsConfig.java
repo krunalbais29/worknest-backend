@@ -13,28 +13,26 @@ public class SecurityCorsConfig {
 
     @Bean
     public CorsFilter corsFilter() {
+
         CorsConfiguration config = new CorsConfiguration();
 
-        // ✅ frontend origin
         config.setAllowedOrigins(List.of(
-        	    "http://localhost:5173",
-        	    "http://localhost:3000",
-        	    "https://your-frontend.vercel.app"
-        	));
+                "http://localhost:5173",
+                "http://localhost:3000",
+                "https://worknest-com.netlify.app"
+        ));
 
-        // ✅ allow all HTTP methods
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of(
+                "GET","POST","PUT","DELETE","OPTIONS"
+        ));
 
-        // ✅ allow headers (Authorization, Content-Type, etc.)
         config.setAllowedHeaders(List.of("*"));
 
-        // ✅ allow JWT Authorization header
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
 
-        // ✅ apply to all endpoints
         source.registerCorsConfiguration("/**", config);
 
         return new CorsFilter(source);
